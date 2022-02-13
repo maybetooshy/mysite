@@ -1,0 +1,17 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+
+{% if latest_question_list %}
+    <ul>
+        {% for question in latest_question_list %}
+        <!--
+            <li><a href="./polls/{{ question.id }}">{{ question.question_text }}</a></li>  url이 하드코딩되어있음. url 변경 시 여기에도 바꿔줘야 함. 그래서 name을 명시해주면 그런 문제를 해결할 수 있음!! 고쳐보자
+        -->
+        <li><a href={% url 'polls:detail' question.id %}>{{ question.question_text }}</a></li> <!-- urls.py에 있는 detail 이름의 url이 적용되도록 + 앱 단위 구분!!! -->
+        <!-- 이렇게 데이터 조회를 위한 방식은 get 방식. post와 다름 -->
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}  

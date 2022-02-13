@@ -1,0 +1,21 @@
+<h1>{{ question.question_text }}</h1>
+
+<!-- <ul>
+{% for choice in question.choice_set.all %} <!-- 그 question에 대해 외래 키로 갖는 choice들을 모두 가져와라 ! -> 리스트로 가져와 (li: 리스트 태그)
+    <li>{{ choice.choice_text }}</li>
+{% endfor %}
+</ul> -->
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %} <!-- 에러메세지 전달받으면 에러메세지를 보여준다! -->
+
+<!-- 서버쪽으로 데이터를 보내기 위해 from 태그, input 태그 사용 -->
+<!-- input은 사용자가 입력할 수 있도록 화면에 보여주는 태그. 라디오버튼으로 적용! html 문서 참고해서 다른 형태도 가능 -->
+
+<form action="{% url 'polls:vote' question.id %}" method="post"> 
+{% csrf_token %} <!-- 사이트간 구조 요청. 해킹 방지를 위함. form 태그 안에는 모두 입력! -->
+{% for choice in question.choice_set.all %}
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+{% endfor %}
+    <input type="submit" value="Vote"> <!-- 사용자가 submit 타입(vote 버튼)의 input tag를 누르면, form의 url로 전달! view에서 그 url로 가서 처리. 데이터 생성, 변경은 post로 하겠다. (rest API?)-->
+</form>

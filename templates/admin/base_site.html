@@ -1,0 +1,12 @@
+<!-- 소스 파일을 가져와서 커스터마이징 하면 됨 -->
+<!-- 장고 템플릿 소스 파일은 C:\Users\admin\myenv\Lib\site-packages\django\contrib\admin\templates\admin 여기 있음! -->
+
+{% extends "admin/base.html" %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">Polls Administraion</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
